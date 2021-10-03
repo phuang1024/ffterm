@@ -18,6 +18,7 @@
 #
 
 import sys
+import os
 import time
 import shutil
 import argparse
@@ -53,9 +54,9 @@ def print_img(img, w, h):
 
             block = img[y_start:y_end, x_start:x_end, ...]
             block_size = (x_end-x_start-1) * (y_end-y_start-1)
-            r = np.sum(block[..., 0]) // block_size
+            b = np.sum(block[..., 0]) // block_size
             g = np.sum(block[..., 1]) // block_size
-            b = np.sum(block[..., 2]) // block_size
+            r = np.sum(block[..., 2]) // block_size
 
             set_color(*map(int, (r, g, b)))
             sys.stdout.write("#")
@@ -75,7 +76,8 @@ def main():
         parser.print_help()
         return
 
-    vid = cv2.VideoCapture(args.input)
+    path = os.path.realpath(os.path.expanduser(args.input))
+    vid = cv2.VideoCapture(path)
     fps = vid.get(cv2.CAP_PROP_FPS)
 
     start = time.time()
