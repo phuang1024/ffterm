@@ -33,6 +33,9 @@ def set_bg(r, g, b):
     """
     sys.stdout.write(f"\033[48;2;{r};{g};{b}m")
 
+def set_fg(r, g, b):
+    sys.stdout.write(f"\033[38;2;{r};{g};{b}m")
+
 def move_cursor(x, y):
     """
     0 indexed.
@@ -40,7 +43,7 @@ def move_cursor(x, y):
     sys.stdout.write(f"\033[{y+1};{x+1}f")
 
 
-def print_img(img, w, h):
+def print_img(img, w, h, full):
     x_scale = img.shape[1] / w
     y_scale = img.shape[0] / h
 
@@ -59,8 +62,12 @@ def print_img(img, w, h):
             r = np.sum(block[..., 2]) // block_size
 
             colors = list(map(int, (r, g, b)))
-            set_bg(*colors)
-            sys.stdout.write(" ")
+            if full:
+                set_bg(*colors)
+                sys.stdout.write(" ")
+            else:
+                set_fg(*colors)
+                sys.stdout.write("#")
 
     sys.stdout.flush()
 
@@ -71,6 +78,7 @@ def main():
     parser.add_argument("--help", help="Show help message.")
     parser.add_argument("-w", "--width", help="Output width (characters) (auto if -1)", default=-1, type=int)
     parser.add_argument("-h", "--height", help="Output height (characters) (auto if -1)", default=-1, type=int)
+    parser.add_argument("--full", help="Color full character instead of pound sign.", default=False, action="store_true")
     args = parser.parse_args()
 
     if args.help:
@@ -100,7 +108,7 @@ def main():
             if args.height != -1:
                 height = args.height
 
-            print_img(img, width, height)
+            print_img(img, width, height, args.full)
             time.sleep(1/fps)
 
         else:
