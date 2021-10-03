@@ -19,6 +19,7 @@
 
 import sys
 import time
+import shutil
 import argparse
 import numpy as np
 import cv2
@@ -66,8 +67,8 @@ def main():
     parser = argparse.ArgumentParser(add_help=False, description="Play videos in the terminal.")
     parser.add_argument("input", help="Input video file.")
     parser.add_argument("--help", help="Show help message.")
-    parser.add_argument("-w", "--width", help="Output width (characters)", default=80, type=int)
-    parser.add_argument("-h", "--height", help="Output height (characters)", default=24, type=int)
+    parser.add_argument("-w", "--width", help="Output width (characters) (auto if -1)", default=-1, type=int)
+    parser.add_argument("-h", "--height", help="Output height (characters) (auto if -1)", default=-1, type=int)
     args = parser.parse_args()
 
     if args.help:
@@ -90,8 +91,15 @@ def main():
                 break
 
         if success:
-            print_img(img, args.width, args.height)
+            width, height = shutil.get_terminal_size()
+            if args.width != -1:
+                width = args.width
+            if args.height != -1:
+                height = args.height
+
+            print_img(img, width, height)
             time.sleep(1/fps)
+
         else:
             break
 
