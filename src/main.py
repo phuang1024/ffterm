@@ -77,13 +77,23 @@ def main():
     vid = cv2.VideoCapture(args.input)
     fps = vid.get(cv2.CAP_PROP_FPS)
 
+    start = time.time()
+    frame = 0
     while True:
-        ret, img = vid.read()
-        if not ret:
-            break
+        next_frame = (time.time() - start) * fps + 1
+        success = True
+        while frame < next_frame:
+            ret, img = vid.read()
+            frame += 1
+            if not ret:
+                success = False
+                break
 
-        print_img(img, args.width, args.height)
-        time.sleep(1/fps)
+        if success:
+            print_img(img, args.width, args.height)
+            time.sleep(1/fps)
+        else:
+            break
 
 
 main()
