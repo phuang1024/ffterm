@@ -26,14 +26,19 @@ import numpy as np
 import cv2
 
 
+def bounds(c):
+    return min(max(c, 0), 255)
+
 def set_bg(r, g, b):
     """
     Set terminal color for background.
     r, g, b are ints from 0 to 255
     """
+    r, g, b = map(bounds, (r, g, b))
     sys.stdout.write(f"\033[48;2;{r};{g};{b}m")
 
 def set_fg(r, g, b):
+    r, g, b = map(bounds, (r, g, b))
     sys.stdout.write(f"\033[38;2;{r};{g};{b}m")
 
 def move_cursor(x, y):
