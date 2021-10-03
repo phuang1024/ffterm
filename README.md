@@ -9,3 +9,5 @@ Default autodetects and adapts if terminal is scaled.
 
 Warning: If you redirect output to a file, the file may become
 very large.
+
+![](https://github.com/phuang1024/termvideo/blob/main/examples/piano.png?raw=true)
