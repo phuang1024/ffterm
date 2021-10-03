@@ -26,12 +26,12 @@ import numpy as np
 import cv2
 
 
-def set_color(r, g, b):
+def set_bg(r, g, b):
     """
-    Set terminal color.
+    Set terminal color for background.
     r, g, b are ints from 0 to 255
     """
-    sys.stdout.write(f"\033[38;2;{r};{g};{b}m")
+    sys.stdout.write(f"\033[48;2;{r};{g};{b}m")
 
 def move_cursor(x, y):
     """
@@ -58,8 +58,9 @@ def print_img(img, w, h):
             g = np.sum(block[..., 1]) // block_size
             r = np.sum(block[..., 2]) // block_size
 
-            set_color(*map(int, (r, g, b)))
-            sys.stdout.write("#")
+            colors = list(map(int, (r, g, b)))
+            set_bg(*colors)
+            sys.stdout.write(" ")
 
     sys.stdout.flush()
 
