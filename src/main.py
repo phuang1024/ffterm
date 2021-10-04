@@ -80,14 +80,15 @@ def print_img(img, w, h, full):
 def main():
     parser = argparse.ArgumentParser(add_help=False, description="Play videos in the terminal.")
     parser.add_argument("input", help="Input video file.")
-    parser.add_argument("--help", help="Show help message.")
-    parser.add_argument("-w", "--width", help="Output width (characters) (auto if -1)", default=-1, type=int)
-    parser.add_argument("-h", "--height", help="Output height (characters) (auto if -1)", default=-1, type=int)
+    parser.add_argument("-x", help="Output width (characters) (auto if -1)", default=-1, type=int)
+    parser.add_argument("-y", help="Output height (characters) (auto if -1)", default=-1, type=int)
     parser.add_argument("--full", help="Color full character instead of pound sign.", default=False, action="store_true")
+    parser.add_argument("--redirect", help="Allow redirecting to a file", default=False, action="store_true")
     args = parser.parse_args()
 
-    if args.help:
-        parser.print_help()
+    if not (args.redirect or sys.stdout.isatty()):
+        print("Warning: The output file may become very large.")
+        print("Pass --redirect to allow redirecting to a file.")
         return
 
     path = os.path.realpath(os.path.expanduser(args.input))
@@ -108,10 +109,10 @@ def main():
 
         if success:
             width, height = shutil.get_terminal_size()
-            if args.width != -1:
-                width = args.width
-            if args.height != -1:
-                height = args.height
+            if args.x != -1:
+                width = args.x
+            if args.y != -1:
+                height = args.y
 
             print_img(img, width, height, args.full)
             time.sleep(1/fps)
