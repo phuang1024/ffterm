@@ -20,10 +20,18 @@
 import sys
 import os
 import time
+import subprocess
 import shutil
+import ctypes
 import argparse
 import numpy as np
 import cv2
+
+PARENT = os.path.dirname(os.path.realpath(__file__))
+CPP = os.path.join(PARENT, "tvideo.cpp")
+LIB = os.path.join(PARENT, "libtvideo.a")
+
+ARRAY = np.ctypeslib.ndpointer(np.uint8, flags="aligned, c_contiguous")
 
 
 def bounds(c):
@@ -84,12 +92,19 @@ def main():
     parser.add_argument("-y", help="Output height (characters) (auto if -1)", default=-1, type=int)
     parser.add_argument("--full", help="Color full character instead of pound sign.", default=False, action="store_true")
     parser.add_argument("--redirect", help="Allow redirecting to a file", default=False, action="store_true")
+    parser.add_argument("--cpp", help="Use C++ library (may be faster)", action="store_true")
     args = parser.parse_args()
 
     if not (args.redirect or sys.stdout.isatty()):
         print("Warning: The output file may become very large.")
         print("Pass --redirect to allow redirecting to a file.")
         return
+
+    if args.cpp:
+        subprocess.Popen(["g++", "-Wall", "-O3", "-c", "-fPIC", CPP]).wait()
+        subprocess.Popen(["g++", "-shared", "tvideo.o", "-o", LIB]).wait()
+        lib = ctypes.CDLL(LIB)
+        lib.print_img.argtypes = (ARRAY, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_bool)
 
     path = os.path.realpath(os.path.expanduser(args.input))
     vid = cv2.VideoCapture(path)
@@ -114,7 +129,10 @@ def main():
             if args.y != -1:
                 height = args.y
 
-            print_img(img, width, height, args.full)
+            if args.cpp:
+                lib.print_img(img, img.shape[1], img.shape[0], width, height, args.full)
+            else:
+                print_img(img, width, height, args.full)
             time.sleep(1/fps)
 
         else:
