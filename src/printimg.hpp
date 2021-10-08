@@ -17,14 +17,20 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+#pragma once
+
 #include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/imgcodecs/imgcodecs.hpp>
 
-#include "printimg.hpp"
+#include "ansi.hpp"
 
 
-int main(int argc, char** argv) {
-    cv::Mat img = cv::imread("/home/patrick/rjon.png", 0);
-    printimg(img);
-}
+/**
+ * Print image in the terminal.
+ * Size is auto detected.
+ */
+void printimg(cv::Mat& img);
+
+/**
+ * Print image with fixed size.
+ */
+void printimg(cv::Mat& img, int width, int height);
