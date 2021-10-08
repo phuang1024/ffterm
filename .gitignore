@@ -1,3 +1,7 @@
 .vscode
 
 *.o
+
+/lib
+
+ffterm
