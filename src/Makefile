@@ -19,7 +19,7 @@
 
 CXX = g++
 CXXFLAGS = -Wall -O3
-CXXFILES = ansi.o main.o printimg.o
+CXXFILES = ansi.o main.o printimg.o utils.o
 
 LIBS = -L/usr/local/lib -lopencv_core -lopencv_imgproc -lopencv_video -lopencv_videoio -lopencv_imgcodecs
 

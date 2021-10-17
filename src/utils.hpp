@@ -17,6 +17,16 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+#pragma once
+
 #include <algorithm>
 
 #define  ibounds(x, min_, max_)  (std::min((max_), std::max((min_), ((int)round(x)))))
+
+// Key value constants from getch()
+
+
+/**
+ * Get character from stdin without waiting for newline.
+ */
+char getch();

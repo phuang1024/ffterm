@@ -2,4 +2,5 @@
 
 View media in the terminal.
 
-Completely unrelated to FFmpeg.
+The name was inspired by FFmpeg, but this project is completely
+unrelated to FFmpeg.
