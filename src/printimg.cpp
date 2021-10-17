@@ -24,6 +24,7 @@
 
 #include "ansi.hpp"
 #include "printimg.hpp"
+#include "utils.hpp"
 
 
 void printimg(cv::Mat& img) {
@@ -43,12 +44,12 @@ void printimg(cv::Mat& img, int tw, int th) {
     for (int y = 0; y < th; y++) {
         move_cursor(0, y);
         for (int x = 0; x < tw; x++) {
-            const int x_start = x_scale * x;
-            const int x_end = std::min((int)(x_start+x_scale), width);
-            const int y_start = y_scale * y;
-            const int y_end = std::min((int)(y_start+y_scale), height);
+            const int x_start = ibounds(x_scale * x, 0, width-1);
+            const int x_end = ibounds(x_start+x_scale, 0, width-1);
+            const int y_start = ibounds(y_scale * y, 0, height-1);
+            const int y_end = ibounds(y_start+y_scale, 0, height-1);
 
-            const int block_size = (x_end-x_start-1) * (y_end-y_start-1);
+            const int block_size = (x_end-x_start) * (y_end-y_start);
             int b = 0, g = 0, r = 0;
             for (int cx = x_start; cx < x_end; cx++) {
                 for (int cy = y_start; cy < y_end; cy++) {

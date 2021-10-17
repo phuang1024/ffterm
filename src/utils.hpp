@@ -17,14 +17,6 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/imgcodecs/imgcodecs.hpp>
+#include <algorithm>
 
-#include "printimg.hpp"
-
-
-int main(int argc, char** argv) {
-    cv::Mat img = cv::imread("/home/patrick/img.png", cv::IMREAD_COLOR);
-    printimg(img);
-}
+#define  ibounds(x, min_, max_)  (std::min((max_), std::max((min_), ((int)round(x)))))
