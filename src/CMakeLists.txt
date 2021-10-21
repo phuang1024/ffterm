@@ -17,16 +17,9 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-CXX = g++
-CXXFLAGS = -Wall -O3
-CXXFILES = ansi.o main.o printimg.o utils.o
+cmake_minimum_required(VERSION 3.10)
 
-LIBS = -L/usr/local/lib -lopencv_core -lopencv_imgproc -lopencv_video -lopencv_videoio -lopencv_imgcodecs
+project(FFTerm VERSION 0.0.1)
 
-.PHONY: all clean
-
-all: $(CXXFILES)
-	$(CXX) $(CXXFILES) $(LIBS) -o ffterm
-
-clean:
-	rm -f *.o
+set(FFTerm_srcs main.cpp ansi.cpp printimg.cpp utils.cpp)
+add_executable(ffterm ${FFTerm_srcs})

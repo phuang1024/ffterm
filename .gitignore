@@ -2,6 +2,6 @@
 
 *.o
 
-/lib
+/build
 
-ffterm
+/lib
