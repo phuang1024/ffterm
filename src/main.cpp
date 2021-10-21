@@ -26,6 +26,6 @@
 
 int main(int argc, char** argv) {
     while (true) {
-        printf("%d\n", (int)getch());
+        printf("%d\n", (int)getkey());
     }
 }

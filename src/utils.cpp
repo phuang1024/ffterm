@@ -21,6 +21,8 @@
 #include <termios.h>
 #include <unistd.h>
 
+#include "utils.hpp"
+
 
 char getch() {
     // From https://stackoverflow.com/questions/421860
@@ -44,4 +46,23 @@ char getch() {
         perror ("tcsetattr ~ICANON");
 
     return buf;
+}
+
+
+Keys getkey() {
+    switch (getch()) {
+        case 27:
+            switch (getch()) {
+                case 91:
+                    switch (getch()) {
+                        case 65: return Keys::ARROW_UP;
+                        case 66: return Keys::ARROW_DOWN;
+                        case 67: return Keys::ARROW_RIGHT;
+                        case 68: return Keys::ARROW_LEFT;
+                    }
+            }
+
+        default:
+            return Keys::INVALID;
+    }
 }
