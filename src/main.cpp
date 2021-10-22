@@ -21,10 +21,16 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/imgcodecs/imgcodecs.hpp>
 
+#include "argparse.hpp"
 #include "printimg.hpp"
 
 
 int main(int argc, char** argv) {
+    Argparse::Parser parser("View media in the terminal.");
+    parser.add_kwarg(Argparse::KwArg({"-h", "--help"}));
+    parser.print_help(argv);
+    return 0;
+
     cv::Mat img = cv::imread("/home/patrick/img.png");
     printimg(img);
 }

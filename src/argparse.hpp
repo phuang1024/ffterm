@@ -25,11 +25,17 @@ namespace Argparse {
 
 
 /**
- * Keyword argument
+ * KwArg argument
  * e.g. --arg, --arg=1, --arg="asdf"
  */
-struct Keyword {
-    Keyword(std::vector<std::string> kwds);
+struct KwArg {
+    KwArg(std::vector<std::string> kwds);
+
+    /**
+     * Get human-readable string containing keywords.
+     * e.g. "kwd1", "{kwd1|kwd2}", "{}"
+     */
+    std::string kwdstr();
 
     /**
      * Possible values to set the arg.
@@ -49,11 +55,16 @@ struct Parser {
     /**
      * Add a keyword argument.
      */
-    void add_keyword(Keyword arg);
+    void add_kwarg(KwArg arg);
+
+    /**
+     * Print help to stderr.
+     */
+    void print_help(char** argv);
 
     std::string description;
 
-    std::vector<Keyword> kwargs;
+    std::vector<KwArg> kwargs;
 };
 
 

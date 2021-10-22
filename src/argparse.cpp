@@ -17,14 +17,33 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+#include <iostream>
+
 #include "argparse.hpp"
 
 
 namespace Argparse {
 
 
-Keyword::Keyword(std::vector<std::string> kwds) {
+KwArg::KwArg(std::vector<std::string> kwds) {
     this->kwds = kwds;
+}
+
+std::string KwArg::kwdstr() {
+    if (kwds.size() == 0) {
+        return "{}";
+    } else if (kwds.size() == 1) {
+        return kwds[0];
+    } else {
+        std::string str = "{";
+        for (int i = 0; i < kwds.size(); i++) {
+            str += kwds[i];
+            if (i != kwds.size()-1)
+                str += "|";
+        }
+        str += "}";
+        return str;
+    }
 }
 
 
@@ -32,8 +51,16 @@ Parser::Parser(std::string description) {
     this->description = description;
 }
 
-void Parser::add_keyword(Keyword arg) {
+void Parser::add_kwarg(KwArg arg) {
     kwargs.push_back(arg);
+}
+
+void Parser::print_help(char** argv) {
+    std::cerr << "Usage: " << argv[0] << " ";
+    for (KwArg& arg: kwargs) {
+        std::cerr << arg.kwdstr() << " ";
+    }
+    std::cerr << std::endl;
 }
 
 
