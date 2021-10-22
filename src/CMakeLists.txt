@@ -21,5 +21,15 @@ cmake_minimum_required(VERSION 3.10)
 
 project(FFTerm VERSION 0.0.1)
 
+find_library(cv_core NAMES opencv_core)
+find_library(cv_imgproc NAMES opencv_imgproc)
+find_library(cv_highgui NAMES opencv_highgui)
+find_library(cv_imgcodecs NAMES opencv_imgcodecs)
+message(STATUS "OpenCV: ${cv_core} ${cv_imgproc} ${cv_highgui} ${cv_imgcodecs}")
+
 set(FFTerm_srcs main.cpp ansi.cpp getch.cpp printimg.cpp utils.cpp)
 add_executable(ffterm ${FFTerm_srcs})
+
+target_link_libraries(ffterm
+    ${cv_core} ${cv_imgproc} ${cv_highgui} ${cv_imgcodecs}
+)

@@ -21,11 +21,10 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/imgcodecs/imgcodecs.hpp>
 
-#include "getch.hpp"
+#include "printimg.hpp"
 
 
 int main(int argc, char** argv) {
-    while (true) {
-        printf("%d\n", (int)getkey());
-    }
+    cv::Mat img = cv::imread("/home/patrick/img.png");
+    printimg(img);
 }
