@@ -17,19 +17,44 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#pragma once
-
-#include <algorithm>
-
-#define  ibounds(x, min_, max_)  (std::min((max_), std::max((min_), ((int)round(x)))))
+#include <string>
+#include <vector>
 
 
-/**
- * Sleep for t seconds.
- */
-void sleep(double t);
+namespace Argparse {
+
 
 /**
- * Return system time in seconds.
+ * Keyword argument
+ * e.g. --arg, --arg=1, --arg="asdf"
  */
-double get_time();
+struct Keyword {
+    Keyword(std::vector<std::string> kwds);
+
+    /**
+     * Possible values to set the arg.
+     */
+    std::vector<std::string> kwds;
+
+    /**
+     * String value the user set.
+     * Inited after parser.parse();
+     */
+    std::string value;
+};
+
+struct Parser {
+    Parser(std::string description);
+
+    /**
+     * Add a keyword argument.
+     */
+    void add_keyword(Keyword arg);
+
+    std::string description;
+
+    std::vector<Keyword> kwargs;
+};
+
+
+}  // namespace Argparse

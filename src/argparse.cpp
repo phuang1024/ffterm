@@ -17,19 +17,24 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#pragma once
-
-#include <algorithm>
-
-#define  ibounds(x, min_, max_)  (std::min((max_), std::max((min_), ((int)round(x)))))
+#include "argparse.hpp"
 
 
-/**
- * Sleep for t seconds.
- */
-void sleep(double t);
+namespace Argparse {
 
-/**
- * Return system time in seconds.
- */
-double get_time();
+
+Keyword::Keyword(std::vector<std::string> kwds) {
+    this->kwds = kwds;
+}
+
+
+Parser::Parser(std::string description) {
+    this->description = description;
+}
+
+void Parser::add_keyword(Keyword arg) {
+    kwargs.push_back(arg);
+}
+
+
+}  // namespace Argparse

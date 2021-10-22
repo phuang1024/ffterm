@@ -27,3 +27,8 @@ void sleep(double t) {
     std::this_thread::sleep_for(std::chrono::milliseconds((int)t * 1000));
 }
 
+double get_time() {
+    const auto now = std::chrono::system_clock::now().time_since_epoch();
+    const double elapse = std::chrono::duration_cast<std::chrono::milliseconds>(now).count();
+    return elapse / 1000;
+}
