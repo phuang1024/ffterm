@@ -51,18 +51,19 @@ char getch() {
 
 Keys getkey() {
     switch (getch()) {
-        case 27:
-            switch (getch()) {
-                case 91:
-                    switch (getch()) {
-                        case 65: return Keys::ARROW_UP;
-                        case 66: return Keys::ARROW_DOWN;
-                        case 67: return Keys::ARROW_RIGHT;
-                        case 68: return Keys::ARROW_LEFT;
-                    }
+        case 27: switch (getch()) {
+            case 91: switch (getch()) {
+                case 65: return Keys::ARROW_UP;
+                case 66: return Keys::ARROW_DOWN;
+                case 67: return Keys::ARROW_RIGHT;
+                case 68: return Keys::ARROW_LEFT;
             }
 
-        default:
-            return Keys::INVALID;
+            default: return Keys::INVALID;
+        }
+
+        case 113: return Keys::Q;
+
+        default: return Keys::INVALID;
     }
 }

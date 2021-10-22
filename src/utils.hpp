@@ -26,10 +26,13 @@
 // Key value constants for getkey()
 enum Keys {
     INVALID,
+
     ARROW_UP,
     ARROW_DOWN,
     ARROW_LEFT,
     ARROW_RIGHT,
+
+    Q,
 };
 
 
