@@ -23,28 +23,8 @@
 
 #define  ibounds(x, min_, max_)  (std::min((max_), std::max((min_), ((int)round(x)))))
 
-// Key value constants for getkey()
-enum Keys {
-    INVALID,
-
-    ARROW_UP,
-    ARROW_DOWN,
-    ARROW_LEFT,
-    ARROW_RIGHT,
-
-    Q,
-};
-
 
 /**
- * Get character from stdin without waiting for newline.
+ * Sleep for t seconds.
  */
-char getch();
-
-/**
- * Read key from stdin and return the key value defined in this header.
- * Handles:
- * * Arrow keys
- * * Plus and minus
- */
-Keys getkey();
+void sleep(double t);

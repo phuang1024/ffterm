@@ -17,15 +17,27 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/imgcodecs/imgcodecs.hpp>
+// Key value constants for getkey()
+enum Keys {
+    INVALID,
 
-#include "getch.hpp"
+    ARROW_UP,
+    ARROW_DOWN,
+    ARROW_LEFT,
+    ARROW_RIGHT,
 
+    Q,
+};
 
-int main(int argc, char** argv) {
-    while (true) {
-        printf("%d\n", (int)getkey());
-    }
-}
+/**
+ * Get character from stdin without waiting for newline.
+ */
+char getch();
+
+/**
+ * Read key from stdin and return the key value defined in this header.
+ * Handles:
+ * * Arrow keys
+ * * Plus and minus
+ */
+Keys getkey();

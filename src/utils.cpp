@@ -17,53 +17,13 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include <stdio.h>
-#include <termios.h>
-#include <unistd.h>
+#include <chrono>
+#include <thread>
 
 #include "utils.hpp"
 
 
-char getch() {
-    // From https://stackoverflow.com/questions/421860
-    char buf = 0;
-    struct termios old = {0};
-    if (tcgetattr(0, &old) < 0)
-        perror("tcsetattr()");
-
-    old.c_lflag &= ~ICANON;
-    old.c_lflag &= ~ECHO;
-    old.c_cc[VMIN] = 1;
-    old.c_cc[VTIME] = 0;
-    if (tcsetattr(0, TCSANOW, &old) < 0)
-        perror("tcsetattr ICANON");
-
-    if (read(0, &buf, 1) < 0)
-        perror ("read()");
-    old.c_lflag |= ICANON;
-    old.c_lflag |= ECHO;
-    if (tcsetattr(0, TCSADRAIN, &old) < 0)
-        perror ("tcsetattr ~ICANON");
-
-    return buf;
+void sleep(double t) {
+    std::this_thread::sleep_for(std::chrono::milliseconds((int)t * 1000));
 }
 
-
-Keys getkey() {
-    switch (getch()) {
-        case 27: switch (getch()) {
-            case 91: switch (getch()) {
-                case 65: return Keys::ARROW_UP;
-                case 66: return Keys::ARROW_DOWN;
-                case 67: return Keys::ARROW_RIGHT;
-                case 68: return Keys::ARROW_LEFT;
-            }
-
-            default: return Keys::INVALID;
-        }
-
-        case 113: return Keys::Q;
-
-        default: return Keys::INVALID;
-    }
-}

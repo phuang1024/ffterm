@@ -21,5 +21,5 @@ cmake_minimum_required(VERSION 3.10)
 
 project(FFTerm VERSION 0.0.1)
 
-set(FFTerm_srcs main.cpp ansi.cpp printimg.cpp utils.cpp)
+set(FFTerm_srcs main.cpp ansi.cpp getch.cpp printimg.cpp utils.cpp)
 add_executable(ffterm ${FFTerm_srcs})
