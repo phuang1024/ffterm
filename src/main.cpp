@@ -21,10 +21,33 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/imgcodecs/imgcodecs.hpp>
 
+#include <iostream>
+#include <string>
+
 #include "printimg.hpp"
+
+const std::string IMG_EXTS[] = {
+    "bmp", "dib", "jpeg", "jpg", "jpe", "jp2", "png", "pbm",
+    "pgm", "ppm", "sr", "ras", "tiff", "tif", "webp", "hdr",
+    "pic",
+};
+
+const std::string VIDEO_EXTS[] = {
+    "mp4", "m4v", "mov", "avi", "wmv", "mpg", "mpeg", "m2v",
+};
 
 
 int main(int argc, char** argv) {
-    cv::Mat img = cv::imread("/home/patrick/img.png");
-    printimg(img);
+    if (argc == 1) {
+        std::cout << "Usage: ffterm <file>\n";
+        return 1;
+    } else {
+        std::string filename = argv[1];
+        cv::Mat img = cv::imread(filename);
+        if (img.empty()) {
+            std::cout << "Error: Could not open file " << filename << "\n";
+            return 1;
+        }
+        printimg(img);
+    }
 }
