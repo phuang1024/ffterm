@@ -24,6 +24,11 @@
 #include "argparse.hpp"
 #include "config.hpp"
 
+const std::string IMG_EXTS[] = {
+    "bmp", "dib", "jpeg", "jpg", "jpe", "jp2", "png", "pbm",
+    "pgm", "ppm", "sr", "ras", "tiff", "tif", "webp", "hdr",
+    "pic",
+};
 
 int main(int argc, char** argv) {
     argparse::ArgumentParser parser("ffterm", VSTR);
