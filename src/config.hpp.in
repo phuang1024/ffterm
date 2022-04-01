@@ -17,14 +17,12 @@
 //  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/imgcodecs/imgcodecs.hpp>
+#define  VMAJOR  @FFTerm_VERSION_MAJOR@
+#define  VMINOR  @FFTerm_VERSION_MINOR@
+#define  VPATCH  @FFTerm_VERSION_PATCH@
 
-#include "argparse.hpp"
-#include "config.hpp"
+#include <algorithm>
+#include <string>
 
-
-int main(int argc, char** argv) {
-    argparse::ArgumentParser parser("ffterm", VSTR);
-}
+const std::string VSTR = std::to_string(VMAJOR) + "." + std::to_string(VMINOR) + "."
+    + std::to_string(VPATCH);

@@ -27,8 +27,16 @@ find_library(cv_highgui NAMES opencv_highgui)
 find_library(cv_imgcodecs NAMES opencv_imgcodecs)
 message(STATUS "OpenCV: ${cv_core} ${cv_imgproc} ${cv_highgui} ${cv_imgcodecs}")
 
-set(FFTerm_srcs main.cpp ansi.cpp argparse.cpp getch.cpp printimg.cpp utils.cpp)
+configure_file(config.hpp.in config.hpp)
+
+set(FFTerm_srcs main.cpp ansi.cpp getch.cpp printimg.cpp utils.cpp)
 add_executable(ffterm ${FFTerm_srcs})
+
+set(3rdparty "${PROJECT_SOURCE_DIR}/../3rdparty")
+
+target_include_directories(ffterm PUBLIC
+    "${3rdparty}/argparse/include/argparse"
+)
 
 target_link_libraries(ffterm
     ${cv_core} ${cv_imgproc} ${cv_highgui} ${cv_imgcodecs}
