@@ -28,7 +28,7 @@ with open("requirements.txt", "r") as fp:
 
 setuptools.setup(
     name="ffterm",
-    version="0.0.1",
+    version="0.1.0",
     author="Patrick Huang",
     author_email="phuang1024@gmail.com",
     description="Play media in the terminal.",
