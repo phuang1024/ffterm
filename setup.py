@@ -40,7 +40,7 @@ setuptools.setup(
     install_requires=requirements,
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: GNU General Public License v3 or later (GPLv3+)",
+        "License :: GNU General Public License v2 or later (GPLv2+)",
         "Operating System :: OS Independent",
     ],
     include_package_data=True,
