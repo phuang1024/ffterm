@@ -32,6 +32,8 @@ import numpy as np
 ROOT = Path(__file__).parent
 TMP = Path("/tmp")
 
+RESET = "\033[0m"
+
 ARRAY = np.ctypeslib.ndpointer(np.uint8, flags="aligned, c_contiguous")
 INT8 = ctypes.c_int
 BOOL = ctypes.c_bool
@@ -60,22 +62,38 @@ def play_video(lib, path, args):
 
     start = time.time()
     frame = 0
-    while True:
-        next_frame = (time.time()-start) * fps + 1
-        success = True
-        while frame < next_frame:
-            ret, img = vid.read()
-            frame += 1
-            if not ret:
-                success = False
+    draw_time = 0
+    frames_drawn = 0
+
+    try:
+        while True:
+            next_frame = (time.time()-start) * fps + 1
+            success = True
+            while frame < next_frame:
+                ret, img = vid.read()
+                frame += 1
+                if not ret:
+                    success = False
+                    break
+
+            if success:
+                width, height = shutil.get_terminal_size()
+                t = time.time()
+                lib.print_img(img, img.shape[1], img.shape[0], width, height, args.full)
+                draw_time += time.time() - t
+
+                time.sleep(1/fps)
+                frames_drawn += 1
+            else:
                 break
 
-        if success:
-            width, height = shutil.get_terminal_size()
-            lib.print_img(img, img.shape[1], img.shape[0], width, height, args.full)
-            time.sleep(1/fps)
-        else:
-            break
+    except KeyboardInterrupt:
+        pass
+
+    avg = draw_time / frames_drawn
+    print(RESET)
+    print(f"Frames drawn: {frames_drawn}")
+    print(f"Average draw time: {avg:.3f}s, {1/avg:.3f}fps")
 
     return 0
 
