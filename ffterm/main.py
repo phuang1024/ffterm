@@ -36,6 +36,9 @@ ARRAY = np.ctypeslib.ndpointer(np.uint8, flags="aligned, c_contiguous")
 INT8 = ctypes.c_int
 BOOL = ctypes.c_bool
 
+EXTS_VID = (".mp4", ".mov", ".m4a")
+EXTS_IMG = (".png", ".jpg", ".tif")
+
 
 def load_lib():
     cpp = ROOT / "ffterm.cpp"
@@ -51,23 +54,7 @@ def load_lib():
     return lib
 
 
-def main():
-    parser = argparse.ArgumentParser(description="Play videos in the terminal.")
-    parser.add_argument("input", help="Input video file.")
-    parser.add_argument("--full", default=False, action="store_true",
-        help="Color full character instead of pound sign.")
-    parser.add_argument("--redirect", default=False, action="store_true",
-        help="Allow redirecting to a file")
-    args = parser.parse_args()
-
-    if not (args.redirect or sys.stdout.isatty()):
-        print("Warning: The output file may become very large.")
-        print("Pass --redirect to allow redirecting to a file.")
-        return 1
-
-    lib = load_lib()
-
-    path = Path(args.input).expanduser().absolute().as_posix()
+def play_video(lib, path, args):
     vid = cv2.VideoCapture(path)
     fps = vid.get(cv2.CAP_PROP_FPS)
 
@@ -91,6 +78,34 @@ def main():
             break
 
     return 0
+
+
+def play_img(lib, path, args):
+    img = cv2.imread(path)
+    width, height = shutil.get_terminal_size()
+    lib.print_img(img, img.shape[1], img.shape[0], width, height, args.full)
+
+    return 0
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Play videos in the terminal.")
+    parser.add_argument("input", help="Input file.")
+    parser.add_argument("--full", default=False, action="store_true",
+        help="Color full character instead of pound sign.")
+    args = parser.parse_args()
+
+    lib = load_lib()
+    path = Path(args.input).expanduser().absolute().as_posix()
+
+    if path.endswith(EXTS_VID):
+        return play_video(lib, path, args)
+    elif path.endswith(EXTS_IMG):
+        return play_img(lib, path, args)
+
+    ending = os.path.splitext(path)[1]
+    print("Unrecognized file ending:", ending)
+    return 1
 
 
 if __name__ == "__main__":
