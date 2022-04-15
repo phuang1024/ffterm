@@ -20,4 +20,4 @@ There may be errors if the terminal size is too large.
 
 ## Example
 
-!()[https://raw.githubusercontent.com/phuang1024/ffterm/master/examples/piano.png]
+![](https://raw.githubusercontent.com/phuang1024/ffterm/master/examples/piano.png)
