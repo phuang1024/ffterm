@@ -93,7 +93,7 @@ def play_video(lib, path, args):
     avg = draw_time / frames_drawn
     print(RESET)
     print(f"Frames drawn: {frames_drawn}")
-    print(f"Average draw time: {avg:.3f}s, {1/avg:.3f}fps")
+    print(f"Average draw time: {avg*1000:.3f}ms, {1/avg:.3f}fps")
 
     return 0
 
