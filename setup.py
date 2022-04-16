@@ -21,6 +21,7 @@ import os
 import setuptools
 
 VERSION = os.environ.get("PYPI_VERSION", "0.0.1")
+VERSION = VERSION.split("-")[-1]  # GitHub input
 
 
 with open("README.md", "r") as fp:
