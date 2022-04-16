@@ -84,3 +84,28 @@ extern "C" void print_img(UCH* img, int width, int height, int tw, int th, bool 
 
     fflush(stdout);
 }
+
+extern "C" void print_progress(int width, int height, double progress) {
+    //   10% [#####--------]
+    move_cursor(0, height-1);
+    printf("\033[0m");
+
+    int percent = progress * 100;
+    if (percent < 10)
+        printf("  %d", percent);
+    else if (percent < 100)
+        printf(" %d", percent);
+    else
+        printf("%d", percent);
+    printf("% [");
+
+    int total = width - 7;
+    int filled = total * progress;
+    for (int i = 0; i < filled; i++)
+        printf("#");
+    for (int i = 0; i < total-filled; i++)
+        printf("-");
+    printf("]");
+
+    fflush(stdout);
+}

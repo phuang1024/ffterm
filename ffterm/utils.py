@@ -18,11 +18,13 @@
 #
 
 import shutil
+import sys
 
 from .lib import load_lib
 
 LIB = load_lib()
 print_img = LIB.print_img
+print_progress = LIB.print_progress
 
 RESET = "\033[0m"
 

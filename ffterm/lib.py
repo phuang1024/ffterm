@@ -30,6 +30,7 @@ RESET = "\033[0m"
 
 ARRAY = np.ctypeslib.ndpointer(np.uint8, flags="aligned, c_contiguous")
 INT8 = ctypes.c_int
+DOUBLE = ctypes.c_double
 BOOL = ctypes.c_bool
 
 EXTS_VID = (".mp4", ".mov", ".m4a")
@@ -46,5 +47,6 @@ def load_lib():
 
     lib = ctypes.CDLL(so)
     lib.print_img.argtypes = (ARRAY, INT8, INT8, INT8, INT8, BOOL)
+    lib.print_progress.argtypes = (INT8, INT8, DOUBLE)
 
     return lib

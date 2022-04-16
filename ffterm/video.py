@@ -17,23 +17,22 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+import sys
 import time
 
 import cv2
 
-from .utils import tsize, print_img, RESET
+from .utils import RESET, tsize, print_img, print_progress
 
 
 def play_video(path, args):
     vid = cv2.VideoCapture(path)
     fps = vid.get(cv2.CAP_PROP_FPS)
-
-    start = time.time()
-    frame = 0
-    draw_time = 0
-    frames_drawn = 0
+    num_frames = vid.get(cv2.CAP_PROP_FRAME_COUNT)
 
     try:
+        start = time.time()
+        frame = 0
         while True:
             next_frame = (time.time()-start) * fps + 1
             success = True
@@ -46,21 +45,14 @@ def play_video(path, args):
 
             if success:
                 width, height = tsize()
-                t = time.time()
-                print_img(img, img.shape[1], img.shape[0], width, height, args.full)
-                draw_time += time.time() - t
-
-                time.sleep(1/fps)
-                frames_drawn += 1
+                print_img(img, img.shape[1], img.shape[0], width, height-1, args.full)
+                print_progress(width, height, frame/num_frames)
             else:
                 break
 
-    except KeyboardInterrupt:
-        pass
+            time.sleep(1/fps)
 
-    avg = draw_time / frames_drawn
-    print(RESET)
-    print(f"Frames drawn: {frames_drawn}")
-    print(f"Average draw time: {avg*1000:.3f}ms, {1/avg:.3f}fps")
+    except KeyboardInterrupt:
+        sys.stdout.write(RESET)
 
     return 0

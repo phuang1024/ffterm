@@ -24,7 +24,7 @@ import time
 from pathlib import Path
 
 from .image import play_img
-from .utils import EXTS_VID, EXTS_IMG
+from .utils import EXTS_VID, EXTS_IMG, RESET
 from .video import play_video
 
 
@@ -49,3 +49,4 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+    print(RESET)
