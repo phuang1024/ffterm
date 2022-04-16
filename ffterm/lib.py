@@ -17,11 +17,34 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-.PHONY: wheel install
+import ctypes
+from pathlib import Path
+from subprocess import Popen
 
-wheel:
-	rm -rf ./build ./dist ./*.egg-info
-	python setup.py bdist_wheel sdist
+import numpy as np
 
-install:
-	pip install ./dist/*.whl
+ROOT = Path(__file__).parent
+TMP = Path("/tmp")
+
+RESET = "\033[0m"
+
+ARRAY = np.ctypeslib.ndpointer(np.uint8, flags="aligned, c_contiguous")
+INT8 = ctypes.c_int
+BOOL = ctypes.c_bool
+
+EXTS_VID = (".mp4", ".mov", ".m4a")
+EXTS_IMG = (".png", ".jpg", ".tif")
+
+
+def load_lib():
+    cpp = ROOT / "ffterm.cpp"
+    obj = TMP / "ffterm.o"
+    so = TMP / "libffterm.so"
+
+    Popen(["g++", "-Wall", "-O3", "-c", "-fPIC", cpp, "-o", obj]).wait()
+    Popen(["g++", "-shared", obj, "-o", so]).wait()
+
+    lib = ctypes.CDLL(so)
+    lib.print_img.argtypes = (ARRAY, INT8, INT8, INT8, INT8, BOOL)
+
+    return lib

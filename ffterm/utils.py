@@ -17,11 +17,18 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-.PHONY: wheel install
+import shutil
 
-wheel:
-	rm -rf ./build ./dist ./*.egg-info
-	python setup.py bdist_wheel sdist
+from .lib import load_lib
 
-install:
-	pip install ./dist/*.whl
+LIB = load_lib()
+print_img = LIB.print_img
+
+RESET = "\033[0m"
+
+EXTS_VID = (".mp4", ".mov", ".m4a")
+EXTS_IMG = (".png", ".jpg", ".tif")
+
+
+def tsize():
+    return shutil.get_terminal_size()

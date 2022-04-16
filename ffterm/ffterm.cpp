@@ -1,5 +1,5 @@
 //
-//  Termvideo
+//  FFTerm
 //  Play videos in the terminal.
 //  Copyright Patrick Huang 2021
 //

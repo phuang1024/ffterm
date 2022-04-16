@@ -17,11 +17,14 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-.PHONY: wheel install
+import cv2
 
-wheel:
-	rm -rf ./build ./dist ./*.egg-info
-	python setup.py bdist_wheel sdist
+from .utils import tsize, print_img
 
-install:
-	pip install ./dist/*.whl
+
+def play_img(path, args):
+    img = cv2.imread(path)
+    width, height = tsize()
+    print_img(img, img.shape[1], img.shape[0], width, height, args.full)
+
+    return 0
