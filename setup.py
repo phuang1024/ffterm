@@ -17,7 +17,10 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+import os
 import setuptools
+
+VERSION = os.environ.get("PYPI_VERSION", "0.0.1")
 
 
 with open("README.md", "r") as fp:
@@ -28,7 +31,7 @@ with open("requirements.txt", "r") as fp:
 
 setuptools.setup(
     name="ffterm",
-    version="0.1.0",
+    version=VERSION,
     author="Patrick Huang",
     author_email="phuang1024@gmail.com",
     description="Play media in the terminal.",
