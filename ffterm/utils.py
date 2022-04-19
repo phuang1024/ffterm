@@ -22,7 +22,7 @@ import sys
 
 from .lib import load_lib
 
-VERSION = "0.1.5"
+VERSION = "0.1.6"
 
 LIB = load_lib()
 print_img = LIB.print_img
