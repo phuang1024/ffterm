@@ -97,7 +97,7 @@ extern "C" void print_progress(int width, int height, double progress) {
         printf(" %d", percent);
     else
         printf("%d", percent);
-    printf("% [");
+    printf("%% [");
 
     int total = width - 7;
     int filled = total * progress;
