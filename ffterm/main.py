@@ -24,7 +24,7 @@ import time
 from pathlib import Path
 
 from .image import play_img
-from .utils import EXTS_VID, EXTS_IMG, RESET
+from .utils import EXTS_VID, EXTS_IMG, RESET, VERSION
 from .video import play_video
 
 
@@ -33,6 +33,7 @@ def main():
     parser.add_argument("input", help="Input file.")
     parser.add_argument("--full", default=False, action="store_true",
         help="Color full character instead of pound sign.")
+    parser.add_argument("-V", "--version", action="version", version=VERSION)
     args = parser.parse_args()
 
     path = Path(args.input).expanduser().absolute().as_posix()

@@ -22,6 +22,8 @@ import sys
 
 from .lib import load_lib
 
+VERSION = "0.1.5"
+
 LIB = load_lib()
 print_img = LIB.print_img
 print_progress = LIB.print_progress
